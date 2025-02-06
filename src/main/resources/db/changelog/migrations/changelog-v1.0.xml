@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    
+    <changeSet id="creating students table" author="hala_alnadeem">
+        <createTable tableName="students">
+            <column name="id" type="int AUTO_INCREMENT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone_number" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="major" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_of_registration" type="TIMESTAMP DEFAULT CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP DEFAULT CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="filling courses table" author="hala_alnadeem">
+        <!-- Accounting Courses -->
+        <insert tableName="courses">
+            <column name="name" value="Introduction to Management"/>
+            <column name="code" value="MGT101"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Financial Accounting"/>
+            <column name="code" value="ACC201"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Management Accounting"/>
+            <column name="code" value="ACC202"/>
+        </insert>
+
+        <!-- MIS Courses -->
+        <insert tableName="courses">
+            <column name="name" value="Business Computing"/>
+            <column name="code" value="MIS110"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Introduction to MIS"/>
+            <column name="code" value="MIS201"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Systems Analysis and Design"/>
+            <column name="code" value="MIS326"/>
+        </insert>
+
+        <!-- Finance Courses -->
+        <insert tableName="courses">
+            <column name="name" value="Introduction to Finance"/>
+            <column name="code" value="FIN202"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Investment"/>
+            <column name="code" value="FIN311"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Financial Modeling"/>
+            <column name="code" value="FIN330"/>
+        </insert>
+
+        <!-- SWE Courses -->
+        <insert tableName="courses">
+            <column name="name" value="Programming Fundamentals"/>
+            <column name="code" value="CIS103"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Introduction to Software Engineering"/>
+            <column name="code" value="SWE202"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Software Requirements Engineering"/>
+            <column name="code" value="SWE301"/>
+        </insert>
+
+        <!-- Arch Courses -->
+        <insert tableName="courses">
+            <column name="name" value="General Calculus"/>
+            <column name="code" value="MTH101"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Computer-Aided Design"/>
+            <column name="code" value="ARC203"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Landscape and Site Planning"/>
+            <column name="code" value="ARC303"/>
+        </insert>
+
+        <!-- NES Courses -->
+        <insert tableName="courses">
+            <column name="name" value="Discrete Mathematics"/>
+            <column name="code" value="MTH106"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Digital Logic and Design"/>
+            <column name="code" value="NES221"/>
+        </insert>
+        <insert tableName="courses">
+            <column name="name" value="Computer Networks"/>
+            <column name="code" value="NES341"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

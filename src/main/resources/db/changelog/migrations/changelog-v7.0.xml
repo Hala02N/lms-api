@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="adding foreign key constraints" author="hala_alnadeem">
+        <renameColumn tableName="students_courses" oldColumnName="user_id" newColumnName="student_id" columnDataType="int"/>
+        <addForeignKeyConstraint baseTableName="students_courses" baseColumnNames="student_id" constraintName="fk_student_id"
+                                 referencedTableName="students"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="students_courses" baseColumnNames="course_id" constraintName="fk_course_id"
+                                 referencedTableName="courses"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
