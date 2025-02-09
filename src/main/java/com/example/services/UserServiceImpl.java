@@ -5,6 +5,7 @@ import com.example.exceptions.AuthException;
 import com.example.repositories.UserRepository;
 import com.example.requests.CreateUserRequest;
 import com.example.security.JWTUtil;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,18 +27,18 @@ public class UserServiceImpl implements UserService {
 
     // Not necessary as Elide can handle it (e.g.http://localhost:8080/api/json/student?filter[student]=id=={id})
     @Override
-    public UserEntity getUserById(String studentId) {
+    public UserEntity getUserById(String studentId) throws BadHttpRequest {
         UserEntity student = userRepository.findById(Integer.parseInt(studentId)).orElse(null);
         if (student == null) {
-            return null; // will change that to throw an exception
+            throw new BadHttpRequest();
         }
         return student;
     }
     @Override
-    public UserEntity getUserByEmail(String email) {
+    public UserEntity getUserByEmail(String email) throws BadHttpRequest {
         UserEntity student = userRepository.findByEmail(email).orElse(null);
         if (student == null) {
-            return null; // will change that to throw an exception
+            throw new BadHttpRequest();
         }
         return student;
     }
@@ -52,9 +53,9 @@ public class UserServiceImpl implements UserService {
         // Create a user entity
         UserEntity userEntity = new UserEntity();
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
-            throw new RuntimeException("Email address already exists");
+            throw new AuthException("Email address already exists");
         }
-        // setting email, first and last name into the user entity
+        // Setting email, first and last name into the user entity
         userEntity.setFirstName(request.getFirstName());
         userEntity.setLastName(request.getLastName());
         userEntity.setEmail(request.getEmail());
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
         }
         UserEntity userEntity = user.get();
         if(!passwordEncoder.matches(password, userEntity.getPassword()))
-            throw new RuntimeException("Passwords do not match");
+            throw new AuthException("Passwords do not match");
         return jwtUtil.generateJWToken(email);
     }
 }
