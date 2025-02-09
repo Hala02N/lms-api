@@ -22,8 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
-    private UserRepository studentRepository;
-    @Autowired
     private JWTFilter jwtFilter;
     @Autowired
     private MyUserDetailsService userDetailsService;
@@ -58,14 +56,4 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-        /*
-        http
-            .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF for APIs
-            .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll()
-            )
-            .httpBasic(httpBasic -> {});
-        return http.build();
-    }
-         */
 }
