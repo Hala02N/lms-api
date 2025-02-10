@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-@Include(name = "user") // Exposes the entity as "student" in the API for elide
+@Include(name = "user") // Exposes the entity as "user" in the API for elide
 public class UserEntity {
 
     @Id
@@ -46,7 +46,18 @@ public class UserEntity {
     private Date registrationDate;
 
     @Column(name = "updated_at", insertable = false)
-    private Date updatedAt = new Date();
+    private Date updatedAt;
+
+    @PreUpdate
+    public void updateDate(){
+        updatedAt = new Date();
+    }
+
+    @PrePersist
+    public void setRegistrationDateBeforePersistance() {
+        registrationDate = new Date();
+        updatedAt = new Date();
+    }
 
     // Getters and Setters.  No setter for the id & registration date
     public Integer getId() {
@@ -107,10 +118,6 @@ public class UserEntity {
 
     public Date getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getRole() {

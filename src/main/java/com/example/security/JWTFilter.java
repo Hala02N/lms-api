@@ -1,10 +1,13 @@
 package com.example.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.example.exceptions.AuthException;
+import com.example.exceptions.RequestValidationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.http.impl.execchain.RequestAbortedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +30,8 @@ public class JWTFilter extends OncePerRequestFilter {
         if(authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")){
             String jwt = authHeader.substring(7);
             if(jwt == null || jwt.isBlank()){
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
+                throw new AuthException("Invalid JWT Token in Bearer Header");
+                //response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
             }else {
                 try{
                     String email = jwtUtil.validateJWTokenAndRetrieveSubject(jwt);
@@ -39,12 +43,11 @@ public class JWTFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }catch(JWTVerificationException exc){
-                    throw new RuntimeException("Invalid JWT Token");
-                   // response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+                    throw new AuthException("Invalid JWT Token");
+                   // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
                 }
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

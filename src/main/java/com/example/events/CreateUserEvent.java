@@ -5,7 +5,6 @@ public class CreateUserEvent {
 
     private String major;
 
-
     public Integer getId() { return id; }
 
     public void setId(Integer id) {
