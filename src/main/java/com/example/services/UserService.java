@@ -13,7 +13,7 @@ public interface UserService {
     List<UserEntity> getAllUsers();
     UserEntity createUser(CreateUserRequest student);
     UserEntity updateUser(UserEntity student);
-    void deleteUser(String studentId);
+    UserEntity deleteUser(Integer userId);
 
     String authenticateUser(String email, String password);
 }
