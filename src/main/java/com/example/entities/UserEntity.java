@@ -4,12 +4,17 @@ import com.yahoo.elide.annotation.Include;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Include(name = "user") // Exposes the entity as "student" in the API for elide
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
+@Where(clause = "deleted=false")
 public class UserEntity {
 
     @Id
@@ -48,7 +53,29 @@ public class UserEntity {
     @Column(name = "updated_at", insertable = false)
     private Date updatedAt = new Date();
 
-    // Getters and Setters.  No setter for the id & registration date
+    @Column(name = "deleted")
+    private Boolean deleted = Boolean.FALSE;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    Set<RoleEntity> assignedRoles;
+
+    @PreUpdate
+    public void updateDate(){
+        updatedAt = new Date();
+    }
+
+    @PrePersist
+    public void setRegistrationDateBeforePersistance() {
+        registrationDate = new Date();
+        updatedAt = new Date();
+    }
+
+   //  Getters and Setters.  No setter for the id & registration date
     public Integer getId() {
         return id;
     }
@@ -119,6 +146,25 @@ public class UserEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+        public Set<RoleEntity> getAssignedRoles() {
+        return assignedRoles;
+    }
+
+    public void setAssignedRoles(Set<RoleEntity> assignedRoles) {
+        this.assignedRoles = assignedRoles;
     }
 }
 
